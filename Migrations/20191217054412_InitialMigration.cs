@@ -14,7 +14,7 @@ namespace TodoList.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     itemName = table.Column<string>(nullable: true),
-                    price = table.Column<double>(nullable: false)
+                    description = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

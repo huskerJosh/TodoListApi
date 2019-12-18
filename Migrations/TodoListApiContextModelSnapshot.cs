@@ -18,18 +18,18 @@ namespace TodoList.Migrations
                 .HasAnnotation("ProductVersion", "3.1.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            modelBuilder.Entity("TodoList.Models.InventoryItem", b =>
+            modelBuilder.Entity("TodoList.Models.TodoItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<string>("itemName")
+                    b.Property<string>("description")
                         .HasColumnType("text");
 
-                    b.Property<double>("price")
-                        .HasColumnType("double precision");
+                    b.Property<string>("itemName")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

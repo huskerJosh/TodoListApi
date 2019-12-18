@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using TodoList.Services;
 using TodoList.Models;
 
@@ -6,13 +7,21 @@ namespace TodoList.Controllers
 {
     [Route("v1")]
     [ApiController]
-    public class InventoryController : ControllerBase
+    public class TodoController : ControllerBase
     {
 
-        private IInventoryServices _service;
+        public static IConfiguration _config;
 
+        public TodoController(IConfiguration config)
+        {
+            _config = config;
+        }
+
+        private ITodoServices _service = new TodoServices(_config);
+
+        [Route("AddItem")]
         [HttpPost]
-        public ActionResult<InventoryItem> addItem(InventoryItem item)
+        public ActionResult<TodoItem> addItem(TodoItem item)
         {
             _service.AddItem(item);
 
@@ -24,8 +33,9 @@ namespace TodoList.Controllers
             return item;
         }
 
+        [Route("GetItem")]
         [HttpGet]
-        public ActionResult<InventoryItem> getItem(InventoryItem item)
+        public ActionResult<TodoItem> getItem(TodoItem item)
         {
             _service.GetItem(item);
 

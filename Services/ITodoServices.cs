@@ -2,14 +2,14 @@
 
 namespace TodoList.Services
 {
-    public interface IInventoryServices
+    public interface ITodoServices
     {
-       public InventoryItem AddItem(InventoryItem item)
+       public TodoItem AddItem(TodoItem item)
         {
             throw new System.NotImplementedException();
         }
 
-        public InventoryItem GetItem(InventoryItem item)
+        public TodoItem GetItem(TodoItem item)
         {
             throw new System.NotImplementedException();
         }
