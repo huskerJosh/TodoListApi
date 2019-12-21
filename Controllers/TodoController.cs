@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using TodoList.Services;
 using TodoList.Models;
 
@@ -12,12 +13,14 @@ namespace TodoList.Controllers
 
         public static IConfiguration _config;
 
-        public TodoController(IConfiguration config)
+        public static IOptions<MySettingsModel> appSettings;
+
+        public TodoController(IOptions<MySettingsModel> app)
         {
-            _config = config;
+            appSettings = app;
         }
 
-        private ITodoServices _service = new TodoServices(_config);
+        private ITodoServices _service = new TodoServices(appSettings);
 
         [Route("AddItem")]
         [HttpPost]

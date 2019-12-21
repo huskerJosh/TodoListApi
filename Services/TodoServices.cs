@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using System;
 using TodoList.Models;
 
@@ -7,18 +7,18 @@ namespace TodoList.Services
 {
     public class TodoServices : ITodoServices
     {
-        IConfiguration _config;
+        IOptions<MySettingsModel> appSettings;
 
-        public TodoServices(IConfiguration config)
+        public TodoServices(IOptions<MySettingsModel> app)
         {
-            _config = config;
+            appSettings = app;
         }
 
 
         public TodoItem AddItem(TodoItem item)
         {
             var optionBuilder = new DbContextOptionsBuilder<TodoListApiContext>();
-            optionBuilder.UseNpgsql("Host=localhost;Database=TodoList.Dev;Username=mye223;Password=password");
+            optionBuilder.UseNpgsql(appSettings.Value.DbConnection);
             using (var context = new TodoListApiContext(optionBuilder.Options))
             {
                 item.itemName = "Wash Car";
