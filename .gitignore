@@ -235,3 +235,4 @@ bin
 packages
 bin/
 appsettings.Development.json
+.DS_Store
