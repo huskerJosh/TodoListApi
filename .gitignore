@@ -232,4 +232,5 @@ _Pvt_Extensions
 
 obj
 bin
-packages
+packagesbin/
+appsettings.Development.json
