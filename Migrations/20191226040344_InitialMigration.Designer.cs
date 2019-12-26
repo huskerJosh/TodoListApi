@@ -9,7 +9,7 @@ using TodoList.Models;
 namespace TodoList.Migrations
 {
     [DbContext(typeof(TodoListApiContext))]
-    [Migration("20191217054412_InitialMigration")]
+    [Migration("20191226040344_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,7 +35,7 @@ namespace TodoList.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("InventoryItem");
+                    b.ToTable("TodoItem");
                 });
 #pragma warning restore 612, 618
         }

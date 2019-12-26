@@ -6,6 +6,6 @@ namespace TodoList.Models
     {
         public TodoListApiContext(DbContextOptions<TodoListApiContext> options) : base(options){}
 
-        public DbSet<TodoItem> InventoryItem { get; set; }
+        public DbSet<TodoItem> TodoItem { get; set; }
     }
 }

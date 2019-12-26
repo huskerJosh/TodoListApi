@@ -28,7 +28,7 @@ namespace TodoList
             services.AddSingleton<ITodoServices, TodoServices>();
 
             services.AddEntityFrameworkNpgsql().AddDbContext<TodoListApiContext>(opt =>
-            opt.UseNpgsql(Configuration.GetConnectionString("TodoListConnection")));
+            opt.UseNpgsql(Configuration.GetSection("MySettings").GetSection("DbConnection").Value));
 
             services.AddSwaggerGen(c =>
             {

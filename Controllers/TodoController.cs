@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using TodoList.Services;
 using TodoList.Models;
+using System.Collections.Generic;
 
 namespace TodoList.Controllers
 {
@@ -36,18 +37,42 @@ namespace TodoList.Controllers
             return item;
         }
 
-        [Route("GetItem")]
+        [Route("[controller]")]
         [HttpGet]
-        public ActionResult<TodoItem> getItem(TodoItem item)
+        public ActionResult<List<TodoItem>> getAll()
         {
-            _service.GetItem(item);
+            List<TodoItem> result = _service.GetAll();
+            return result;
+        }
 
-            if (item == null)
+        [Route("[controller]/{id}")]
+        [HttpGet]
+        public ActionResult<TodoItem> getItem(int id)
+        {
+            TodoItem result = _service.GetItem(id);
+
+            if (result == null)
             {
                 return NotFound();
             }
 
-            return item;
+            return result;
+        }
+
+        [Route("[controller]")]
+        [HttpPatch]
+        public ActionResult<TodoItem> updateItem(TodoItem item)
+        {
+            return _service.UpdateItem(item);
+
+        }
+
+        [Route("[controller]/{id}")]
+        [HttpDelete]
+        public ActionResult<bool> deleteItem(int id)
+        {
+            return _service.DeleteItem(id);
+
         }
         
     }

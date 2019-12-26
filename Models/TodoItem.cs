@@ -7,6 +7,7 @@ namespace TodoList.Models
         public int Id { get; set; }
         public string itemName { get; set; }
         public string description { get; set; }
+        public bool isActive { get; set; }
 
     }
 }

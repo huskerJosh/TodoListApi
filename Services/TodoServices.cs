@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using TodoList.Models;
 
 namespace TodoList.Services
@@ -21,18 +23,71 @@ namespace TodoList.Services
             optionBuilder.UseNpgsql(appSettings.Value.DbConnection);
             using (var context = new TodoListApiContext(optionBuilder.Options))
             {
-                item.itemName = "Wash Car";
-                item.description = "Wash dirt off Jeep";
-
                 context.Entry(item).State = EntityState.Added;
                 context.SaveChanges();
             }
             return item;
         }
 
-        public TodoItem GetItem(TodoItem item)
+        public List<TodoItem> GetAll()
         {
-            throw new NotImplementedException();
+            var optionBuilder = new DbContextOptionsBuilder<TodoListApiContext>();
+            optionBuilder.UseNpgsql(appSettings.Value.DbConnection);
+            var context = new TodoListApiContext(optionBuilder.Options);
+
+            return context.TodoItem.ToList();
+            
+        }
+
+        public TodoItem GetItem(int id)
+        {
+            var optionBuilder = new DbContextOptionsBuilder<TodoListApiContext>();
+            optionBuilder.UseNpgsql(appSettings.Value.DbConnection);
+            var context = new TodoListApiContext(optionBuilder.Options);
+
+            return context.TodoItem.Single(item => item.Id == id);
+        }
+
+        public TodoItem UpdateItem(TodoItem item)
+        {
+            var optionBuilder = new DbContextOptionsBuilder<TodoListApiContext>();
+            optionBuilder.UseNpgsql(appSettings.Value.DbConnection);
+            var context = new TodoListApiContext(optionBuilder.Options);
+
+            TodoItem result = context.TodoItem.SingleOrDefault(i => i.Id == item.Id);
+
+            if(result ==null)
+            {
+                return null;
+            }
+
+            result.itemName = item.itemName;
+            result.isActive = item.isActive;
+            result.description = item.description;
+
+            context.SaveChanges();
+
+            return item;
+        }
+
+        public bool DeleteItem(int id)
+        {
+            var optionBuilder = new DbContextOptionsBuilder<TodoListApiContext>();
+            optionBuilder.UseNpgsql(appSettings.Value.DbConnection);
+            var context = new TodoListApiContext(optionBuilder.Options);
+
+            context.TodoItem.Remove(context.TodoItem.Find(id));
+            context.SaveChanges();
+
+            TodoItem result = context.TodoItem.SingleOrDefault(i => i.Id == id);
+
+            if (result == null)
+            {
+                return true;
+            } else
+            {
+                return false;
+            }
         }
     }
 }

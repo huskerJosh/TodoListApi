@@ -1,4 +1,5 @@
-﻿using TodoList.Models;
+﻿using System.Collections.Generic;
+using TodoList.Models;
 
 namespace TodoList.Services
 {
@@ -9,7 +10,22 @@ namespace TodoList.Services
             throw new System.NotImplementedException();
         }
 
-        public TodoItem GetItem(TodoItem item)
+        public List<TodoItem> GetAll()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public TodoItem GetItem(int item)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public TodoItem UpdateItem(TodoItem item)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool DeleteItem(int id)
         {
             throw new System.NotImplementedException();
         }
