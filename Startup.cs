@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,15 +16,20 @@ namespace TodoList
 
         IConfiguration Configuration;
 
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
         }
 
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+
             services.AddControllers();
             services.AddSingleton<ITodoServices, TodoServices>();
 
@@ -35,8 +41,20 @@ namespace TodoList
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
             });
 
-            services.AddMvc();
+            
             services.Configure<MySettingsModel>(Configuration.GetSection("MySettings"));
+
+            services.AddCors(options =>
+            {
+                // this defines a CORS policy called "default"
+                options.AddPolicy(MyAllowSpecificOrigins, policy =>
+                {
+                    policy.WithOrigins("http://localhost:3000")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
+            services.AddMvc();
 
         }
 
@@ -61,10 +79,15 @@ namespace TodoList
 
             app.UseAuthorization();
 
+            app.UseCors(MyAllowSpecificOrigins);
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllers().RequireCors(MyAllowSpecificOrigins);
             });
+
+            
+
         }
     }
 }

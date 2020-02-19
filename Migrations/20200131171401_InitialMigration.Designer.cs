@@ -9,7 +9,7 @@ using TodoList.Models;
 namespace TodoList.Migrations
 {
     [DbContext(typeof(TodoListApiContext))]
-    [Migration("20191226040344_InitialMigration")]
+    [Migration("20200131171401_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,6 +29,9 @@ namespace TodoList.Migrations
 
                     b.Property<string>("description")
                         .HasColumnType("text");
+
+                    b.Property<bool>("isActive")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("itemName")
                         .HasColumnType("text");

@@ -4,10 +4,12 @@ using Microsoft.Extensions.Options;
 using TodoList.Services;
 using TodoList.Models;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Cors;
 
 namespace TodoList.Controllers
 {
     [Route("v1")]
+    [EnableCors("_myAllowSpecificOrigins")]
     [ApiController]
     public class TodoController : ControllerBase
     {
